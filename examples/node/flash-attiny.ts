@@ -48,12 +48,9 @@ async function main() {
 
   // UPDI uses 115200 8E2 (even parity, 2 stop bits)
   const serialPort = new SerialPort({
-    path:     port,
-    baudRate: board.baudRate,
-    dataBits: 8,
-    parity:   'even',
-    stopBits: 2,
+    path: port,
     autoOpen: false,
+    ...NodeSerialTransport.updiPortOptions(board.baudRate),
   });
   const transport = new NodeSerialTransport(serialPort);
   const updi      = new UPDI(transport, board);

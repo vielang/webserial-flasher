@@ -32,6 +32,34 @@ export interface NodeSerialPortLike {
 }
 
 export class NodeSerialTransport implements ISTKTransport {
+  /**
+   * Returns serialport-compatible open options for UPDI programming (8E2).
+   *
+   * UPDI requires even parity and 2 stop bits for reliable single-wire
+   * communication. Pass these options when creating/opening the SerialPort.
+   *
+   * @example
+   * ```ts
+   * import { SerialPort } from 'serialport';
+   * const port = new SerialPort({
+   *   path: '/dev/ttyUSB0',
+   *   autoOpen: false,
+   *   ...NodeSerialTransport.updiPortOptions(115200),
+   * });
+   * await port.open();
+   * const transport = new NodeSerialTransport(port);
+   * ```
+   */
+  static updiPortOptions(baudRate = 115200): {
+    baudRate: number;
+    parity:   'even';
+    stopBits: 2;
+    dataBits: 8;
+  } {
+    return { baudRate, parity: 'even', stopBits: 2, dataBits: 8 };
+  }
+
+
   // Map user handlers → wrapped handlers so removeListener works correctly
   private readonly handlerMap = new Map<
     (chunk: Uint8Array) => void,

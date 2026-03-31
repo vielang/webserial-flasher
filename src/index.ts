@@ -52,10 +52,12 @@ export {
 export { WebSerialTransport }   from './transport/WebSerialTransport.js';
 export { NodeSerialTransport }  from './transport/NodeSerialTransport.js';
 export { NodeUSBTransport }     from './transport/NodeUSBTransport.js';
+export { WebSocketTransport }   from './transport/WebSocketTransport.js';
 export type { ISTKTransport, SerialSignals }          from './transport/ITransport.js';
 export type { IPicobootTransport }                    from './transport/IPicobootTransport.js';
 export type { WebSerialPortFilter, WebSerialOpenOptions } from './transport/WebSerialTransport.js';
 export type { NodeSerialPortLike }                    from './transport/NodeSerialTransport.js';
+export type { WebSocketTransportOptions }             from './transport/WebSocketTransport.js';
 
 // ── Board database ────────────────────────────────────────────────────────
 
