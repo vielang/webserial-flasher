@@ -15,7 +15,9 @@ describe('board database', () => {
   test('all boards have required fields', () => {
     for (const [key, board] of Object.entries(BOARDS)) {
       assert(board.name, `${key}: missing name`);
-      assert(board.baudRate > 0, `${key}: invalid baudRate`);
+      // PICOBOOT boards use USB (not serial) so baudRate = 0 is valid
+      const isPicoboot = board.protocol === 'picoboot';
+      assert(isPicoboot || board.baudRate > 0, `${key}: invalid baudRate`);
       assert(board.signature instanceof Uint8Array, `${key}: signature must be Uint8Array`);
       assert.equal(board.signature.length, 3, `${key}: signature must be 3 bytes`);
       assert(board.pageSize > 0, `${key}: invalid pageSize`);

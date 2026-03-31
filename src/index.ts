@@ -1,4 +1,4 @@
-// arduino-flasher — public API
+// webserial-flasher — public API
 //
 // Default export: STK500 class (backward compatible with v1.x)
 // Named exports: everything needed for typed usage across all supported protocols

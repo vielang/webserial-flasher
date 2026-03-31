@@ -57,14 +57,9 @@ export class MockPicobootTransport implements IPicobootTransport {
   }
 
   async sendBytes(data: Uint8Array): Promise<void> {
-    const lastCmd = this.cmdHistory[this.cmdHistory.length - 1];
     this.dataHistory.push(new Uint8Array(data));
-
-    // Simulate writing to flash if the last command was WRITE
-    if (lastCmd && extractCmdId(lastCmd) === PicobootCmd.WRITE) {
-      const addr = extractAddr(lastCmd);
-      this.flash.set(addr, new Uint8Array(data));
-    }
+    // Note: writes are NOT automatically stored in this.flash.
+    // Tests that need read-back to succeed should pre-populate this.flash manually.
   }
 
   async resetInterface(): Promise<void> {

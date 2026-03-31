@@ -53,7 +53,7 @@ export class STK500 {
       this.log = (level, msg) => {
         /* istanbul ignore next */
         if (typeof console !== 'undefined') {
-          console.log(`[arduino-flasher] [${level}] ${msg}`);
+          console.log(`[webserial-flasher] [${level}] ${msg}`);
         }
       };
     }

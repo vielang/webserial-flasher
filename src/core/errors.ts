@@ -1,4 +1,4 @@
-// Typed error hierarchy for arduino-flasher
+// Typed error hierarchy for webserial-flasher
 // Callers can use instanceof to distinguish error types and show appropriate UI
 
 export enum STK500ErrorCode {

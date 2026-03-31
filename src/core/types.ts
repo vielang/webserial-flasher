@@ -1,4 +1,4 @@
-// Public types and interfaces for arduino-flasher
+// Public types and interfaces for webserial-flasher
 
 /** ISP programming parameters used by the STK500v2 programmer */
 export interface V2ISPParams {

@@ -1,4 +1,4 @@
-// Browser WebSerial API transport for arduino-flasher.
+// Browser WebSerial API transport for webserial-flasher.
 // Works in Chrome 89+ and Edge 89+. Not available in Firefox or Safari.
 //
 // Usage:

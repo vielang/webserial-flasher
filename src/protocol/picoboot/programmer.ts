@@ -39,7 +39,7 @@ export class PicoBoot {
     } else if (opts?.logger) {
       this.log = opts.logger;
     } else {
-      this.log = (level, msg) => console.log(`[arduino-flasher:picoboot] [${level}] ${msg}`);
+      this.log = (level, msg) => console.log(`[webserial-flasher:picoboot] [${level}] ${msg}`);
     }
   }
 

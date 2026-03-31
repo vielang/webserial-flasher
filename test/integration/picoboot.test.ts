@@ -177,6 +177,10 @@ describe('PicoBoot integration', () => {
   // ── bootload: raw binary ───────────────────────────────────────────────────
 
   test('bootload (raw binary): executes full flash sequence', async () => {
+    // Pre-load flash so the verify phase sees the correct data
+    for (let i = 0; i < FIRMWARE.length; i += FLASH_PAGE_SIZE) {
+      transport.flash.set(i, FIRMWARE.slice(i, i + FLASH_PAGE_SIZE));
+    }
     const events: Array<{ status: string; pct: number }> = [];
 
     await pico.bootload(FIRMWARE, (s, p) => events.push({ status: s, pct: p }));

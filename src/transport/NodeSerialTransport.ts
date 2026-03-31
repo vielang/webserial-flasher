@@ -1,4 +1,4 @@
-// Node.js transport adapter for arduino-flasher.
+// Node.js transport adapter for webserial-flasher.
 // Works with the `serialport` npm package (https://serialport.io).
 //
 // Usage:

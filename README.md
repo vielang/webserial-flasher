@@ -1,4 +1,4 @@
-# arduino-flasher
+# webserial-flasher
 
 A modern, ESM-compatible, TypeScript implementation of the STK500v1 protocol for programming Arduino boards directly from Node.js or the browser.
 
@@ -14,17 +14,17 @@ A modern, ESM-compatible, TypeScript implementation of the STK500v1 protocol for
 ## Installation
 
 ```bash
-npm install arduino-flasher
+npm install webserial-flasher
 ```
 
 ## Usage
 
-Here's a basic example of how to use arduino-flasher to program an Arduino:
+Here's a basic example of how to use webserial-flasher to program an Arduino:
 
 ```typescript
 import { SerialPort } from "serialport";
 import fs from "fs/promises";
-import STK500, { type Board } from "arduino-flasher";
+import STK500, { type Board } from "webserial-flasher";
 
 const board: Board = {
   name: "Arduino Uno",
@@ -56,7 +56,7 @@ upload("/dev/ttyACM0"); // Replace with your Arduino's serial port
 
 ## Examples
 
-For more detailed examples, please check the `examples` folder in the repository. It contains several TypeScript files demonstrating how to use arduino-flasher with different Arduino boards:
+For more detailed examples, please check the `examples` folder in the repository. It contains several TypeScript files demonstrating how to use webserial-flasher with different Arduino boards:
 
 - `avr4809.ts`: Example for AVR4809 based boards
 - `diecimila-duemilanove168.ts`: Example for Arduino Diecimila and Duemilanove (ATmega168)

@@ -1,5 +1,5 @@
 {
-  "name": "arduino-flasher",
+  "name": "webserial-flasher",
   "version": "3.0.0",
   "description": "Multi-protocol Arduino/AVR programmer — STK500v1, STK500v2, AVR109, UPDI — ESM, TypeScript, Node.js + WebSerial browser support. First JavaScript UPDI implementation.",
   "main": "dist/index.js",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vielang/arduino-flasher.git"
+    "url": "git+https://github.com/vielang/webserial-flasher.git"
   },
   "keywords": [
     "arduino",
