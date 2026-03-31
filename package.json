@@ -1,7 +1,7 @@
 {
   "name": "webserial-flasher",
-  "version": "3.0.0",
-  "description": "Multi-protocol Arduino/AVR programmer — STK500v1, STK500v2, AVR109, UPDI — ESM, TypeScript, Node.js + WebSerial browser support. First JavaScript UPDI implementation.",
+  "version": "1.0.1",
+  "description": "Multi-protocol firmware flasher — STK500v1, STK500v2, AVR109, UPDI, PICOBOOT (RP2040) — ESM, TypeScript, Node.js + WebSerial browser support.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,9 +9,14 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "types":  "./dist/index.d.ts"
+      "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "lint": "eslint src",
     "build": "tsc",
@@ -24,30 +29,51 @@
     "type": "git",
     "url": "git+https://github.com/vielang/webserial-flasher.git"
   },
+  "bugs": {
+    "url": "https://github.com/vielang/webserial-flasher/issues"
+  },
+  "homepage": "https://github.com/vielang/webserial-flasher#readme",
   "keywords": [
     "arduino",
     "stk500",
     "stk500v2",
     "avr109",
     "updi",
+    "picoboot",
     "avr",
     "attiny",
     "atmega",
+    "rp2040",
+    "raspberry-pi-pico",
     "avrdude",
     "typescript",
     "esm",
-    "webserial"
+    "webserial",
+    "webusb",
+    "firmware",
+    "flasher"
   ],
-  "author": "Sebastian Barrenechea",
+  "author": "Vie Lang <chongnguoithuong@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "usb": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "usb": {
+      "optional": true
+    }
+  },
   "devDependencies": {
-    "@eslint/js": "^9.16.0",
-    "@types/node": "^22.10.1",
-    "eslint": "^9.16.0",
-    "globals": "^15.13.0",
-    "serialport": "^12.0.0",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "typescript-eslint": "^8.18.0"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.5.0",
+    "eslint": "^10.1.0",
+    "globals": "^17.4.0",
+    "serialport": "^13.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0"
   }
 }

@@ -10,7 +10,8 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "types": ["node"],
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs wc:*)",
+      "Bash(grep -r \"8E2\\\\|parity\\\\|even\\\\|stop\" /c/Dev/Self/rustboard/vielang-ui/stk500-esm/src --include=*.ts --include=*.js)",
+      "WebSearch"
+    ]
+  }
+}
