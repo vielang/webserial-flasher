@@ -851,6 +851,108 @@ export const BOARDS: Readonly<Record<string, Board>> = {
     flashBase:    0x4000,
     resetMethod:  'none',
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // Raspberry Pi Pico / Pico 2 — PICOBOOT USB protocol
+  //
+  // These boards use the PICOBOOT binary USB protocol when held in BOOTSEL
+  // mode (hold BOOTSEL button while plugging USB).
+  //
+  // Note: baudRate, signature, pageSize are not used by the PICOBOOT
+  // programmer — they are set to neutral values for type compatibility.
+  // Use vid/pid for device detection and flashSize for firmware validation.
+  // ══════════════════════════════════════════════════════════════════════════
+
+  'raspberry-pi-pico': {
+    name:         'Raspberry Pi Pico (RP2040)',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x03]),  // VID/PID hint
+    pageSize:     256,   // PICOBOOT flash page size
+    timeout:      15000,
+    flashSize:    2 * 1024 * 1024,  // 2 MB (W25Q16JV)
+    vid:          0x2E8A,
+    pid:          0x0003,
+    resetMethod:  'none',
+  },
+
+  'raspberry-pi-pico-w': {
+    name:         'Raspberry Pi Pico W (RP2040 + CYW43439)',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x03]),
+    pageSize:     256,
+    timeout:      15000,
+    flashSize:    2 * 1024 * 1024,  // 2 MB
+    vid:          0x2E8A,
+    pid:          0x0003,
+    resetMethod:  'none',
+  },
+
+  'raspberry-pi-pico-2': {
+    name:         'Raspberry Pi Pico 2 (RP2350)',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x0F]),  // PID 0x000F hint
+    pageSize:     256,
+    timeout:      15000,
+    flashSize:    4 * 1024 * 1024,  // 4 MB (W25Q32JV)
+    vid:          0x2E8A,
+    pid:          0x000F,
+    resetMethod:  'none',
+  },
+
+  'adafruit-feather-rp2040': {
+    name:         'Adafruit Feather RP2040',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x03]),
+    pageSize:     256,
+    timeout:      15000,
+    flashSize:    8 * 1024 * 1024,  // 8 MB (W25Q64JV)
+    vid:          0x2E8A,
+    pid:          0x0003,
+    resetMethod:  'none',
+  },
+
+  'adafruit-qt-py-rp2040': {
+    name:         'Adafruit QT Py RP2040',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x03]),
+    pageSize:     256,
+    timeout:      15000,
+    flashSize:    8 * 1024 * 1024,  // 8 MB
+    vid:          0x2E8A,
+    pid:          0x0003,
+    resetMethod:  'none',
+  },
+
+  'sparkfun-pro-micro-rp2040': {
+    name:         'SparkFun Pro Micro RP2040',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x03]),
+    pageSize:     256,
+    timeout:      15000,
+    flashSize:    16 * 1024 * 1024,  // 16 MB (W25Q128JV)
+    vid:          0x2E8A,
+    pid:          0x0003,
+    resetMethod:  'none',
+  },
+
+  'waveshare-rp2040-zero': {
+    name:         'Waveshare RP2040-Zero',
+    protocol:     'picoboot',
+    baudRate:     0,
+    signature:    new Uint8Array([0x2E, 0x8A, 0x03]),
+    pageSize:     256,
+    timeout:      15000,
+    flashSize:    2 * 1024 * 1024,  // 2 MB
+    vid:          0x2E8A,
+    pid:          0x0003,
+    resetMethod:  'none',
+  },
 };
 
 // ── Lookup helpers ─────────────────────────────────────────────────────────
@@ -908,6 +1010,15 @@ const FQBN_MAP: Readonly<Record<string, string>> = {
   // MegaCoreX / MightyCore
   'MegaCoreX:megaavr:4809':    'atmega4809-updi',
   'MegaCore:avr:1284':         'atmega1284p',
+  // Raspberry Pi
+  'rp2040:rp2040:rpipico':     'raspberry-pi-pico',
+  'rp2040:rp2040:rpipicow':    'raspberry-pi-pico-w',
+  'rp2040:rp2040:rpipico2':    'raspberry-pi-pico-2',
+  // Adafruit RP2040
+  'adafruit:rp2040:feather':   'adafruit-feather-rp2040',
+  'adafruit:rp2040:qtpy':      'adafruit-qt-py-rp2040',
+  // SparkFun RP2040
+  'SparkFun:rp2040:promicro':  'sparkfun-pro-micro-rp2040',
 };
 
 /**

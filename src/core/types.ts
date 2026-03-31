@@ -44,9 +44,10 @@ export interface Board {
    *   - 'stk500v1' — Classic STK500 protocol (Uno, Nano, Pro Mini, …)
    *   - 'stk500v2' — STK500v2 ISP protocol (Mega 2560, wiring bootloader)
    *   - 'avr109'   — Atmel AVR109 / Caterina CDC protocol (Leonardo, Micro, Pro Micro)
-   *   - 'updi'     — Single-wire UPDI (tinyAVR, ATmega4809, AVR Dx/Ex — future)
+   *   - 'updi'     — Single-wire UPDI (tinyAVR, ATmega4809, AVR Dx/Ex)
+   *   - 'picoboot' — USB PICOBOOT protocol (Raspberry Pi Pico RP2040 / RP2350)
    */
-  protocol?: 'stk500v1' | 'stk500v2' | 'avr109' | 'updi';
+  protocol?: 'stk500v1' | 'stk500v2' | 'avr109' | 'updi' | 'picoboot';
 
   // ── Optional hardware flags ──────────────────────────────────────────────
 
@@ -86,6 +87,19 @@ export interface Board {
   upperBootSize?: number;
   /** Override the 52-byte STK500v2 device descriptor (expert use) */
   stk500v2Descriptor?: Uint8Array;
+
+  // ── PICOBOOT (RP2040 / RP2350) ───────────────────────────────────────────
+
+  /**
+   * USB Vendor ID for PICOBOOT device detection (default: 0x2E8A — Raspberry Pi).
+   * Only used when protocol = 'picoboot'.
+   */
+  vid?: number;
+  /**
+   * USB Product ID for PICOBOOT device detection (default: 0x0003 — RP2040 USBBOOT).
+   * Only used when protocol = 'picoboot'.
+   */
+  pid?: number;
 
   // ── UPDI ─────────────────────────────────────────────────────────────────
 

@@ -11,6 +11,9 @@ export { STK500v2 } from './protocol/stk500v2/programmer.js';
 export { AVR109 }   from './protocol/avr109/programmer.js';
 export { UPDI }     from './protocol/updi/programmer.js';
 export type { UPDIFuses } from './protocol/updi/programmer.js';
+export { PicoBoot } from './protocol/picoboot/programmer.js';
+export { parseUf2, binaryToUf2, isUf2 } from './protocol/picoboot/uf2.js';
+export type { UF2Block, UF2ParseResult } from './protocol/picoboot/uf2.js';
 
 // ── Auto-detection ────────────────────────────────────────────────────────
 
@@ -48,9 +51,11 @@ export {
 
 export { WebSerialTransport }   from './transport/WebSerialTransport.js';
 export { NodeSerialTransport }  from './transport/NodeSerialTransport.js';
-export type { ISTKTransport, SerialSignals }     from './transport/ITransport.js';
+export { NodeUSBTransport }     from './transport/NodeUSBTransport.js';
+export type { ISTKTransport, SerialSignals }          from './transport/ITransport.js';
+export type { IPicobootTransport }                    from './transport/IPicobootTransport.js';
 export type { WebSerialPortFilter, WebSerialOpenOptions } from './transport/WebSerialTransport.js';
-export type { NodeSerialPortLike }               from './transport/NodeSerialTransport.js';
+export type { NodeSerialPortLike }                    from './transport/NodeSerialTransport.js';
 
 // ── Board database ────────────────────────────────────────────────────────
 
