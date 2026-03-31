@@ -1,0 +1,53 @@
+{
+  "name": "arduino-flasher",
+  "version": "3.0.0",
+  "description": "Multi-protocol Arduino/AVR programmer — STK500v1, STK500v2, AVR109, UPDI — ESM, TypeScript, Node.js + WebSerial browser support. First JavaScript UPDI implementation.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types":  "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "build": "tsc",
+    "test": "tsx --test test/unit/*.test.ts test/integration/*.test.ts",
+    "test:unit": "tsx --test test/unit/*.test.ts",
+    "test:integration": "tsx --test test/integration/*.test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vielang/arduino-flasher.git"
+  },
+  "keywords": [
+    "arduino",
+    "stk500",
+    "stk500v2",
+    "avr109",
+    "updi",
+    "avr",
+    "attiny",
+    "atmega",
+    "avrdude",
+    "typescript",
+    "esm",
+    "webserial"
+  ],
+  "author": "Sebastian Barrenechea",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0",
+    "serialport": "^12.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0"
+  }
+}

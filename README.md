@@ -1,210 +1,97 @@
-![VieShare Gin API](https://upload.wikimedia.org/wikipedia/commons/2/23/Golang.png)
+# arduino-flasher
 
-# VieShare Gin Private API
+A modern, ESM-compatible, TypeScript implementation of the STK500v1 protocol for programming Arduino boards directly from Node.js or the browser.
 
-Welcome to **VieShare Gin Private API** - A PocketBase-compatible backend API built with [Gin Framework](https://github.com/gin-gonic/gin/) for the VieShare e-commerce platform.
+## Features
 
-This API provides a complete backend solution with **SQLite** database, **PocketBase-compatible** endpoints, **JWT** authentication, and **Redis** caching support.
-
-
-### 🏪 **E-commerce Collections**
-- **Users**: User authentication and profiles
-- **Categories & Subcategories**: Product categorization
-- **Products**: Product catalog with images, pricing, inventory
-- **Stores**: Multi-vendor store management
-- **Carts & Cart Items**: Shopping cart functionality
-- **Orders**: Order processing and management
-- **Addresses**: Shipping address management
-- **Customers**: Customer tracking and analytics
-- **Notifications**: User notification preferences
-
-### 🔧 **Technical Stack**
-- [Gin Framework](https://github.com/gin-gonic/gin/): High-performance HTTP web framework
-- [go-gorp](https://github.com/go-gorp/gorp): Go Relational Persistence (ORM)
-- [SQLite3](https://github.com/mattn/go-sqlite3): Embedded database with auto-initialization
-- [jwt-go](https://github.com/golang-jwt/jwt): JSON Web Tokens for authentication
-- [go-redis](https://github.com/go-redis/redis): Redis caching support
-- [Swagger](https://github.com/swaggo/gin-swagger): API documentation
-- Built-in **CORS Middleware** for cross-origin requests
-- Built-in **RequestID Middleware** for request tracking
-- **Environment-based configuration**
-- **SSL/TLS support**
+- Full JavaScript/TypeScript implementation of the STK500v1 programmer
+- ESM (ECMAScript Modules) compatible
+- Can be used in Node.js or browser environments
+- No dependency on avrdude or the Arduino IDE
+- TypeScript support for improved developer experience
+- **Built-in Intel HEX parsing** (no need for external parsing libraries)
 
 ## Installation
 
-### Prerequisites
-- Go 1.19 or higher
-- Git
-
-### Download FrontEnd, please checkout [VieShare FrontEnd](https://github.com/khieu-dv/vieshare.git)
-
-
-### 1. Clone the Repository
-
-
 ```bash
-git clone https://github.com/khieu-dv/vieshare-gin.git
-cd vieshare-gin
+npm install arduino-flasher
 ```
 
-### 2. Install Dependencies
-```bash
-go mod tidy
-```
+## Usage
 
-### 3. Database Setup
-The application uses SQLite with auto-initialization. The database schema is automatically created from `db/pocketbase_schema.sql` on first run.
+Here's a basic example of how to use arduino-flasher to program an Arduino:
 
-**Sample data included:**
-- 4 categories (Vieboards, Clothing, Shoes, Accessories)
-- 9 subcategories (Decks, Wheels, T-shirts, etc.)
-- 3 sample products
-- 1 admin user and store
+```typescript
+import { SerialPort } from "serialport";
+import fs from "fs/promises";
+import STK500, { type Board } from "arduino-flasher";
 
-### 4. Environment Configuration
+const board: Board = {
+  name: "Arduino Uno",
+  baudRate: 115200,
+  signature: new Uint8Array([0x1e, 0x95, 0x0f]),
+  pageSize: 128,
+  timeout: 400,
+};
 
-Create and configure your `.env` file:
-```bash
-cp .env_example .env
-```
-
-**Required environment variables:**
-```env
-# Server Configuration
-PORT=9000
-ENV=LOCAL
-
-# Database Configuration
-DB_PATH=./data/app.db
-
-```
-
-## Running the Application
-
-### Development Mode
-```bash
-go run *.go
-```
-
-### Build and Run
-```bash
-go build -o vieshare-gin .
-./vieshare-gin
-```
-
-
-## API Documentation
-
-### PocketBase-Compatible Endpoints
-
-The API provides PocketBase-compatible endpoints that can be used with existing PocketBase SDKs or direct HTTP calls:
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/health` | Health check |
-| `GET` | `/api/collections/{collection}/records` | List records |
-| `GET` | `/api/collections/{collection}/records/{id}` | Get single record |
-| `POST` | `/api/collections/{collection}/records` | Create record |
-| `PATCH` | `/api/collections/{collection}/records/{id}` | Update record |
-| `DELETE` | `/api/collections/{collection}/records/{id}` | Delete record |
-
-### Available Collections
-
-- `users` - User accounts and authentication
-- `categories` - Product categories
-- `subcategories` - Product subcategories  
-- `stores` - Merchant stores
-- `products` - Product catalog
-- `carts` - Shopping carts
-- `cart_items` - Cart items
-- `addresses` - Shipping addresses
-- `orders` - Order management
-- `customers` - Customer data
-- `notifications` - User notifications
-
-### Query Parameters
-
-- `page` - Page number (default: 1)
-- `perPage` - Records per page (default: 30, max: 100)
-- `sort` - Sort fields (e.g., `created,-updated`)
-- `filter` - Filter query (e.g., `active=true`)
-- `expand` - Expand relations (e.g., `category,store`)
-
-### Example Requests
-
-```bash
-# Get all products with pagination
-curl "http://localhost:9000/api/collections/products/records?page=1&perPage=10"
-
-# Get product with expanded category and store
-curl "http://localhost:9000/api/collections/products/records/prod_deck_001?expand=category,store"
-
-# Filter active products by category
-curl "http://localhost:9000/api/collections/products/records?filter=active=true&&category=cat_vieboards"
-```
-
-### Response Format
-
-All responses follow the PocketBase format:
-
-```json
-{
-  "page": 1,
-  "perPage": 30,
-  "totalItems": 100,
-  "totalPages": 4,
-  "items": [
-    {
-      "id": "record_id",
-      "created": "2023-01-01T00:00:00Z",
-      "updated": "2023-01-01T00:00:00Z",
-      "collectionId": "collection_name",
-      "collectionName": "collection_name",
-      // ... record fields
+async function upload(path: string) {
+  let serialPort;
+  try {
+    const hexData = await fs.readFile("path/to/your/sketch.hex");
+    serialPort = new SerialPort({ path, baudRate: board.baudRate });
+    const stk = new STK500(serialPort, board);
+    await stk.bootload(hexData);
+    console.log("Programming successful!");
+  } catch (error) {
+    console.error("Programming failed:", error);
+  } finally {
+    if (serialPort) {
+      await serialPort.close();
     }
-  ]
+  }
 }
+
+upload("/dev/ttyACM0"); // Replace with your Arduino's serial port
 ```
 
-## Swagger Documentation
+## Examples
 
-Generate and view API documentation:
+For more detailed examples, please check the `examples` folder in the repository. It contains several TypeScript files demonstrating how to use arduino-flasher with different Arduino boards:
+
+- `avr4809.ts`: Example for AVR4809 based boards
+- `diecimila-duemilanove168.ts`: Example for Arduino Diecimila and Duemilanove (ATmega168)
+- `duemilanove328.ts`: Example for Arduino Duemilanove (ATmega328)
+- `lg8f328.ts`: Example for LGT8F328 boards
+- `nano.ts`: Example for Arduino Nano
+- `uno.ts`: Example for Arduino Uno
+
+These examples show how to set up the board configuration, read hex files, and upload them to the respective Arduino boards.
+
+To run an example, use:
+
 ```bash
-make generate_docs
-make run
-open http://localhost:9000/swagger/index.html
+npx tsx examples/uno.ts /dev/ttyACM0
 ```
 
-## Legacy Authentication API
+Replace `uno.ts` with the appropriate example file and `/dev/ttyACM0` with your Arduino's serial port.
 
-The application also maintains legacy JWT authentication endpoints for backward compatibility:
+## API
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/v1/user/login` | User login |
-| `POST` | `/v1/user/register` | User registration |
-| `GET` | `/v1/user/logout` | User logout |
-| `POST` | `/v1/token/refresh` | Refresh JWT token |
+The main class `STK500` provides the following methods:
 
-## Project Structure
+- `constructor(stream: Duplex, board: Board, opts?: STK500Options)`
+- `bootload(hexData: string | Uint8Array, progressCallback?: BootloadProgressCallback): Promise<void>`
+- `sync(attempts: number): Promise<Uint8Array>`
+- `verifySignature(): Promise<Uint8Array>`
+- `upload(hexData: string | Uint8Array, progressCallback?: (percentage: number) => void): Promise<void>`
+- `verify(hexData: string | Uint8Array, progressCallback?: (percentage: number) => void): Promise<void>`
 
-```
-vieshare-gin/
-├── controllers/          # API controllers
-│   ├── pocketbase.go    # Main PocketBase controller
-│   ├── products.go      # Products collection
-│   ├── users.go         # Users collection
-│   └── ...              # Other collections
-├── db/                  # Database layer
-│   ├── db.go           # Database connection
-│   └── pocketbase_schema.sql  # Database schema
-├── models/              # Data models
-│   ├── pocketbase.go   # PocketBase-compatible models
-│   └── user.go         # Legacy user model
-├── forms/              # Form validators
-├── public/             # Static files
-├── .env               # Environment configuration
-└── main.go            # Application entry point
-```
+For more detailed API information, please refer to the TypeScript definitions or the source code.
 
+## Contributing
 
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
